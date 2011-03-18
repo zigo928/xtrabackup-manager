@@ -1,0 +1,57 @@
+#summary A Quick Start Guide to get up and running using Xtrabackup Manager.
+#labels Featured,Phase-Deploy
+
+= Introduction =
+
+This guide should be all you need to get up and running with Xtrabackup Manager quickly. The project is currently in Alpha status, so it is *not intended for production usage* -- if you would like to play with the software and provide feedback, please do so!
+
+Currently the configuration of your backups is done via maintaining a set of tables in a MySQL DB. In future there will be nicer tools to do this (GUI, Cmdline) but this is how you do it for now. It should be a cakewalk for any DBA, but there is definitely potential to shoot yourself in the foot when making such edits directly.
+
+
+= Requirements =
+
+  * Linux with cron, ssh and netcat (nc) - So far I have been testing on CentOS 5.5
+  * MySQL 5.0.x or later - It is possible older versions will work.
+  * Root access on the backup box and the database box(es) you plan to backup.
+
+
+= Installing and Configuring =
+
+== Installing Xtrabackup Manager ==
+
+  # Install a barebones MySQL 5.0 or later somewhere - I suggest using the same host that you plan to run as your backup host. The DB load is very small.
+  # Create a user for the backup manager to run under - I use the username `xbm` but it doesn't matter. You *must* create a new user because Xtrabackup Manager is going to completely take over the crontab of this user.
+  # Change user to your new user: 
+    `shell> su - xbm`
+  # Check out the code: 
+    `shell> svn checkout http://xtrabackup-manager.googlecode.com/svn/trunk/ xtrabackup-manager`
+  # Create a database schema for Xtrabackup Manager to use in MySQL: 
+    `mysql> CREATE DATABASE xbm CHARACTER SET utf8;`
+  # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
+    `shell> mysql xbm < sql/schema_init.sql`
+  # To add some setup examples to your DB, also run the `sql/examples.sql` within the database: 
+    `shell> mysql xbm < sql/examples.sql`
+  # Setup a user for Xtrabackup Manager to use: 
+    `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
+  # Open `includes/config.php` in your favourite editor and run through the various options. The comments in the file should make it fairly easy to understand what does what.
+  # Test to make sure you can use the xbm-info.php tool to pull a host list: 
+    `shell> ./xbm-info.php -l` 
+
+You should see output like:
+
+{{{
+xbm-info.php -- Xtrabackup Manager v0.1 - Copyright 2011 Marin Software
+
+Listing Hosts:
+
+Host ID: 1  Hostname: mybackuphost.mydomain.com
+Description: Example DB to Backup
+Active: Y  Last Backup: Never
+}}}
+
+*Congratulations! You are ready to setup your backups*
+
+
+== Configuring Your Backups ==
+
+More info coming soon.
