@@ -13,6 +13,7 @@ Currently the configuration of your backups is done via maintaining a set of tab
   * Linux with cron, ssh and netcat (nc) - So far I have been testing on CentOS 5.5
   * MySQL 5.0.x or later - It is possible older versions will work.
   * Root access on the backup box and the database box(es) you plan to backup.
+  * PHP 5 - Tested on 5.1.6 - Must also have php CLI - project expects it at `/usr/bin/php`
 
 
 = Installing and Configuring =
@@ -23,8 +24,8 @@ Currently the configuration of your backups is done via maintaining a set of tab
   # Create a user for the backup manager to run under - I use the username `xbm` but it doesn't matter. You *must* create a new user because Xtrabackup Manager is going to completely take over the crontab of this user.
   # Change user to your new user: 
     `shell> su - xbm`
-  # Check out the code: 
-    `shell> svn checkout http://xtrabackup-manager.googlecode.com/svn/trunk/ xtrabackup-manager`
+  # Export the code: 
+    `shell> svn export http://xtrabackup-manager.googlecode.com/svn/trunk/ xtrabackup-manager`
   # Create a database schema for Xtrabackup Manager to use in MySQL: 
     `mysql> CREATE DATABASE xbm CHARACTER SET utf8;`
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
