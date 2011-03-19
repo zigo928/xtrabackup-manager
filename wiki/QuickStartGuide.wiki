@@ -52,6 +52,40 @@ Active: Y  Last Backup: Never
 *Congratulations! You are ready to setup your backups*
 
 
+== Preparing Your Backup Hosts ==
+
+=== Setting up SSH Trust ===
+
+The first thing you need to do is setup SSH trust between your backup host and any database hosts you plan to backup. There may be better ways of achieving passwordless SSH login to remote hosts, but this is the simplest way I know. Please feel free to provide feedback via Issues in Google Code.
+
+
+  # Change user to the Xtrabackup Manager user:
+    `shell> su - xbm`
+  # Create yourself a SSH key -- just press ENTER when prompted to enter a passphrase - we need this to be passwordless so that Xtrabackup Manager can use this key to connect to your remote hosts:
+    `shell> ssh-keygen -t dsa`
+  # Decide which user you are going to use to connect to the remote host. I use the `mysql` user because this is the same user that `mysqld` runs under and therefore I do not have to be too concerned about having the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
+  # Add the contents of the newly generated public key of your Xtrabackup User (`$HOME/.ssh/id_dsa.pub`) to the file called `$HOME/.ssh/authorized_keys` under the user you selected in the previous step on the host you wish to backup from. Create the .ssh directory in the home directory if necessary
+  # Ensure the permissions of the .ssh directory on the remote host are set correctly: 
+    `shell> chmod 700 .ssh`
+  # Ensure the permissions of the authorized_keys file on the remote host are set correctly:
+    `shell> chmod 600 .ssh/authorized_keys`
+  # Test connecting from your Xtrabackup Manager host to your remote host with the user you selected to confirm passwordless login works:
+    `shell> ssh mysql@backuphost`
+
+Congratulations! You've now setup the necessary SSH trust to run backups from this host. 
+
+
+=== Install Xtrabackup ===
+
+Xtrabackup needs to be installed and in the `$PATH` of both the user that Xtrabackup Manager will run under and the user(s) you will use to connect to your remote database hosts.
+
+You should be able to find the information you need to download and install from the [http://www.percona.com/downloads/XtraBackup/ Percona Xtrabackup Download Page].
+
+After you have installed Xtrabackup, test to see that you can run `xtrabackup` and `innobackupex-1.5.1` by just typing the command under the Xtrabackup Manager user on the backup host and under the remote user on your remote host(s).
+
+If not, you may need to setup some symlinks or append the directory with the Xtrabackup binaries to your bash `$PATH`. 
+
+
 == Configuring Your Backups ==
 
 More info coming soon.
