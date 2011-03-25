@@ -38,13 +38,13 @@ Note: In steps 5 and 6, "xbm" is used as the mysql password for the user xbm. It
   # To add some setup examples to your DB, also run the `sql/examples.sql` within the database: 
     `shell> mysql xbm -pxbm< sql/examples.sql`
   # Open `includes/config.php` in your favourite editor and run through the various options. The comments in the file should make it fairly easy to understand what does what.
-  # Test to make sure you can use the xbm-info.php tool to pull a host list: 
-    `shell> ./xbm-info.php -l` 
+  # Test to make sure you can use the xbm-info tool to pull a host list: 
+    `shell> ./xbm-info -l` 
 
 You should see output like:
 
 {{{
-xbm-info.php -- Xtrabackup Manager v0.1 - Copyright 2011 Marin Software
+xbm-info -- Xtrabackup Manager v0.1 - Copyright 2011 Marin Software
 
 Listing Hosts:
 
