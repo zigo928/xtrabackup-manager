@@ -20,6 +20,9 @@ Currently the configuration of your backups is done via maintaining a set of tab
 
 == Installing Xtrabackup Manager ==
 
+Note: In steps 5 and 6, "xbm" is used as the mysql password for the user xbm. It is recommended you exchange that for your own password instead.
+
+
   # Install a barebones MySQL 5.0 or later somewhere - I suggest using the same host that you plan to run as your backup host. The DB load is very small.
   # Create a user for the backup manager to run under - I use the username `xbm` but it doesn't matter. You *must* create a new user because Xtrabackup Manager is going to completely take over the crontab of this user.
   # Change user to your new user: 
@@ -29,7 +32,6 @@ Currently the configuration of your backups is done via maintaining a set of tab
   # Create a database schema for Xtrabackup Manager to use in MySQL: 
     `mysql> CREATE DATABASE xbm CHARACTER SET utf8;`
   # Setup a user for Xtrabackup Manager to use: 
-    Note: In this and the following, "xbm" is used as the mysql password for the user xbm. It is recommended you exchange that for your own password instead.
     `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
     `shell> mysql xbm -pxbm < sql/schema_init.sql`
