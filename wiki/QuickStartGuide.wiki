@@ -34,9 +34,9 @@ Currently the configuration of your backups is done via maintaining a set of tab
   # Setup a user for Xtrabackup Manager to use: 
     `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
-    `shell> mysql xbm -pxbm < sql/schema_init.sql`
+    `shell> mysql -u xbm -pxbm xbm < sql/schema_init.sql`
   # To add some setup examples to your DB, also run the `sql/examples.sql` within the database: 
-    `shell> mysql xbm -pxbm< sql/examples.sql`
+    `shell> mysql -u xbm -pxbm xbm < sql/examples.sql`
   # Open `includes/config.php` in your favourite editor and run through the various options. The comments in the file should make it fairly easy to understand what does what.
   # Test to make sure you can use the xbm-info tool to pull a host list: 
     `shell> ./xbm-info -l` 
