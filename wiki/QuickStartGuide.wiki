@@ -33,6 +33,7 @@ Currently the configuration of your backups is done via maintaining a set of tab
     `mysql> CREATE DATABASE xbm CHARACTER SET utf8;`
   # Setup a user for Xtrabackup Manager to use: 
     `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
+    `mysql> GRANT FILE ON *.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
     `shell> mysql -u xbm -pxbm xbm < sql/schema_init.sql`
   # To add some setup examples to your DB, also run the `sql/examples.sql` within the database: 
