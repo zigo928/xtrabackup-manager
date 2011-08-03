@@ -1,0 +1,45 @@
+#summary An Outline of the design of various aspects of XtraBackup Manager
+#labels Phase-Design
+
+= Introduction =
+
+This design document is not necessarily meant to be an exhaustive documentation of the design of XtraBackup manager. It is primarily for documenting proposed designs for the purpose of development collaboration.
+
+
+=Command-Line Interface Design=
+
+==Configuration Management Tasks==
+
+Configuration management will function in a manner similar to that of ZFS (the "zfs" command on Open/Solaris/Nexenta)...
+
+  * Add a backup volume
+    `xbm volume add <volume_name> <path>`
+  * Add a host
+   `xbm host add <hostname> [<description>]`
+  * Add a Scheduled Backup for a host 
+   `xbm backup add <backup_name> <hostname> <strategy_code> <cron_expression> <backup_volume> <datadir_path> <mysql_user> <mysql_password>`
+  * Edit backup volume
+   `xbm volume edit <volume_name> param=value`
+  * Edit a host
+   `xbm host edit <hostname> param=value`
+  * Edit a scheduled backup and it's settings
+   `xbm backup edit <host> <backup_name> param=value`
+  * Delete a backup volume
+   `xbm volume delete <volume_name>`
+  * Delete a host
+   `xbm host delete <hostname>`
+  * Delete a scheduled backup
+   `xbm backup delete <host> <backup_name>`
+  * List backup volumes
+   `xbm volume list`
+  * List hosts
+   `xbm host list`
+  * List scheduled backups for host
+   `xbm backup list <hostname>`
+  * List snapshots for host/backup (including materialized snapshots)
+   `xbm snapshot list <hostname> [<backup_name>]`
+   Have ability to just list all by not specifying scheduled backup
+  * Restoring a backup to local dir
+   `xbm restore local <snapshot id> <restore_dir>`
+  * Restoring a backup remotely
+   Will begin like "xbm restore remote", but feature not specced / designed yet.
