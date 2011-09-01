@@ -17,7 +17,7 @@ Configuration management will function in a manner similar to that of ZFS (the "
   * Add a host
    `xbm host add <hostname> [<description>]`
   * Add a Scheduled Backup for a host 
-   `xbm backup add <backup_name> <hostname> <strategy_code> <cron_expression> <backup_volume> <datadir_path> <mysql_user> <mysql_password>`
+   `xbm backup add <hostname> <backup_name> <strategy_code> <cron_expression> <backup_volume> <datadir_path> <mysql_user> <mysql_password>`
   * Edit backup volume
    `xbm volume edit <volume_name> param=value`
   * Edit a host
