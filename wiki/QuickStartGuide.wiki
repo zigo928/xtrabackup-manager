@@ -1,7 +1,7 @@
 #summary A Quick Start Guide to get up and running using XtraBackup Manager.
 #labels Featured,Phase-Deploy
 
-= Attention: THIS DOCUMENTATION IS VERY OUTDATED. IT WILL BE UPDATED SOON =
+= Attention: THIS DOCUMENTATION IS UNDER HEAVY CONSTRUCTION =
 See above.
 
 = Introduction =
@@ -17,18 +17,18 @@ Currently the configuration of your backups is done via maintaining a set of tab
   * MySQL server and command-line client 5.0.x or later - It is possible older versions will work.
   * Root access on the backup box and the database box(es) you plan to backup.
   * PHP 5 - Tested on 5.1.6 - Must also have php CLI - project expects it at `/usr/bin/php` and mysqli. (Eg, on debian based systems you need php5-cli and php5-mysql.)
-  * xtrabackup 1.6.2 or later
+  * xtrabackup 1.6.3 or later
 
 
 = Installing and Configuring =
 
 == Installing XtraBackup Manager ==
 
-*Note: In steps 5 and 6, "xbm" is used as the mysql password for the user xbm. It is recommended you exchange that for your own password instead.*
+*Note: In the steps below, "xbm" is used as the mysql password for the user xbm. It is recommended you exchange that for your own password instead.*
 
 
   # Install a barebones MySQL 5.0 or later somewhere - I suggest using the same host that you plan to run as your backup host. The DB load is very small.
-  # Create a user for the backup manager to run under - I use the username `xbm` but it doesn't matter. You *must* create a new user because XtraBackup Manager is going to completely take over the crontab of this user.
+  # Create a system user account for the backup manager to run under - I use the username `xbm` but it doesn't matter. You *must* create a new user because XtraBackup Manager is going to completely take over the crontab of this user.
   # Change user to your new user: 
     `shell> su - xbm`
   # Edit $HOME/.profile and add a line: ulimit -n 65535
@@ -41,22 +41,19 @@ Currently the configuration of your backups is done via maintaining a set of tab
     `mysql> GRANT FILE ON *.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
     `shell> mysql -u xbm -pxbm xbm < sql/schema_init.sql`
-  # To add some setup examples to your DB, also run the `sql/examples.sql` within the database: 
-    `shell> mysql -u xbm -pxbm xbm < sql/examples.sql`
   # Open `includes/config.php` in your favourite editor and run through the various options. The comments in the file should make it fairly easy to understand what does what.
-  # Test to make sure you can use the xbm-info tool to pull a host list: 
-    `shell> ./xbm-info -l` 
+  # Test to make sure you can use the xbm command-line tool: 
+    `shell> ./xbm host list` 
 
 You should see output like:
 
 {{{
-xbm-info -- XtraBackup Manager v0.1 - Copyright 2011 Marin Software
+XtraBackup Manager v0.6 - Copyright 2011 Marin Software
 
-Listing Hosts:
+-- Listing all Hosts --
 
-Host ID: 1  Hostname: mybackuphost.mydomain.com
-Description: Example DB to Backup
-Active: Y  Last Backup: Never
+        No hosts configured.
+
 }}}
 
 *Congratulations! You are ready to setup your backups*
@@ -82,6 +79,7 @@ The first thing you need to do is setup SSH trust between your backup host and a
   # Test connecting from your XtraBackup Manager host to your remote host with the user you selected to confirm passwordless login works:
     `shell> ssh mysql@backuphost`
 
+
 Congratulations! You've now setup the necessary SSH trust to run backups from this host. 
 
 
@@ -91,11 +89,32 @@ XtraBackup needs to be installed and in the `$PATH` of both the user that XtraBa
 
 You should be able to find the information you need to download and install from the [http://www.percona.com/downloads/XtraBackup/ Percona XtraBackup Download Page].
 
-After you have installed XtraBackup, test to see that you can run `xtrabackup` and `innobackupex-1.5.1` by just typing the command under the XtraBackup Manager user on the backup host and under the remote user on your remote host(s).
+After you have installed XtraBackup, test to see that you can run `xtrabackup` and `innobackupex` by just typing the command under the XtraBackup Manager user on the backup host and under the remote user on your remote host(s).
 
 If not, you may need to setup some symlinks or append the directory with the XtraBackup binaries to your bash `$PATH`. 
 
 
 == Configuring Your Backups ==
 
-More info coming soon.
+=== Setting up a Storage Volume ===
+
+XtraBackup Manager needs to know where to store all of the backup data. 
+
+Make a directory somewhere with plenty of storage. Ensure the directory is owned/grouped to your XtraBackup Manager system account and add it to XBM as a storage volume as follows:
+
+  # shell> mkdir /backup1
+  # shell> chown xbm:xbm /backup1 
+  # shell> xbm volume add /backup1 "backup1"
+
+The above will add a storage volume with the name "backup1" at /backup1 to XtraBackup Manager. Easy!
+
+
+=== Adding a Host To Backup ===
+
+To backup a MySQL instance, you'll need to add the host to XtraBackup Manager and give it a description.
+
+You can use the xbm command-line tool as follows:
+
+  # shell> xbm host add
+
+  
