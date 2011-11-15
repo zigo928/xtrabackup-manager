@@ -8,8 +8,6 @@ See above.
 
 This guide should be all you need to get up and running with XtraBackup Manager quickly. The project is currently in Alpha status, so it is *not intended for production usage* -- if you would like to play with the software and provide feedback, please do so!
 
-Currently the configuration of your backups is done via maintaining a set of tables in a MySQL DB. In future there will be nicer tools to do this (GUI, Cmdline) but this is how you do it for now. It should be a cakewalk for any DBA, but there is definitely potential to shoot yourself in the foot when making such edits directly.
-
 
 = Requirements =
 
