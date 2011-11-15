@@ -109,12 +109,17 @@ Make a directory somewhere with plenty of storage. Ensure the directory is owned
 The above will add a storage volume with the name "backup1" at /backup1 to XtraBackup Manager. Easy!
 
 
-=== Adding a Host To Backup ===
+=== Adding a Host ===
 
 To backup a MySQL instance, you'll need to add the host to XtraBackup Manager and give it a description.
 
 You can use the xbm command-line tool as follows:
 
-  # shell> xbm host add db01.mydomain.com "Web DB 1"
+  * shell> xbm host add db01.mydomain.com "Web DB 1"
 
  Note: You will mostly refer to the host by its hostname - the description is predominantly to make it easier for you keep track of your various hosts.
+
+
+=== Adding a Backup Task ===
+
+Once you have setup a storage volume and added your host, the next step is to scheduled a backup task.
