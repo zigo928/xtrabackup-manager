@@ -1,4 +1,4 @@
-#summary XtraBackup Definition
+#summary What is XtraBackup?
 
 = Definition =
 
