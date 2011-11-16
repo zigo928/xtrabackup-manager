@@ -74,11 +74,13 @@ The first thing you need to do is setup SSH trust between your backup host and a
     `shell> chmod 700 .ssh`
   # Ensure the permissions of the authorized_keys file on the remote host are set correctly:
     `shell> chmod 600 .ssh/authorized_keys`
-  # Test connecting from your XtraBackup Manager host to your remote host with the user you selected to confirm passwordless login works:
+  # Test connecting from your XtraBackup Manager host to your remote host with the user you selected to confirm passwordless (key-based) login works:
     `shell> ssh mysql@backuphost`
+  # Finally, verify that the hostname of your XtraBackup Manager server resolves correctly from your backup host. This is required so that the backup data can be streamed over the network to XtraBackup Manager.
+    `shell> host backup01`
 
 
-Congratulations! You've now setup the necessary SSH trust to run backups from this host. 
+Congratulations! You've now perform the necessary steps backup this host.
 
 
 === Install XtraBackup ===
