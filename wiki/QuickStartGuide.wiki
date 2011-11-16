@@ -120,4 +120,6 @@ You can use the xbm command-line tool as follows:
 
 === Adding a Backup Task ===
 
-Once you have setup a storage volume and added your host, the next step is to scheduled a backup task.
+Once you have setup a storage volume and added your host, the next step is to schedule a backup task.
+
+Before you schedule
