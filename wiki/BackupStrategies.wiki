@@ -8,18 +8,18 @@ XtraBackup Manager provides a number of different backup strategies that are use
   * When should an INCREMENTAL backup snapshot be taken?
   * How long should backups be kept for?
 
-There are currently three backup strategies in XtraBackup Manager:
+There are currently three backup strategies in XtraBackup Manager and each has a code that is really just a shorthand way of referring to the strategy within XBM.
 
-  * Full Only - Code: FULLONLY
-  * Continuous Incremental - Code: CONTINC
-  * Rotating Sets of Incremental Backups - Code: ROTATING
+  * Full Only - Code: `FULLONLY`
+  * Continuous Incremental - Code: `CONTINC`
+  * Rotating Sets of Incremental Backups - Code: `ROTATING`
 
-They are explained in detail below.
+Each strategy is explained in detail below.
 
 
 = Full Only =
 
-This is the simplest backup method supported -- XtraBackup Manager will only ever take full backups of the target host.
+This is the simplest backup strategy supported -- XtraBackup Manager will only ever take full backups of the target host.
 
 You can configure the maximum number of these snapshots to keep. 
 
@@ -34,7 +34,24 @@ After each backup is complete, the retention policy will be applied and any numb
 
 = Continuous Incremental =
 
-Take a full backup (aka seed) first and then after that only take incremental backups. The seed and deltas are all stored separately. Again you can configure the maximum number of snapshots to maintain (retention policy), however, in this case, we apply the oldest set of deltas onto the seed and repeat that process until we have no more than the maximum number of snapshots configured. The retention policy is always applied after a successful backup.
+The Continuous Incremental backup strategy is a more resource conscious way of maintaining snapshots of your databases at different points in time.
+
+Rather than taking a full backup of your database every time you wish to take a backup, the Continuous Incremental method will take a full backup, or *seed*, first and after that it will only take incremental backups storing only the changes, or *deltas*, since the last backup was taken. 
+
+You may configure the maximum number of snapshots to maintain on a per backup task basis, and this is referred to as the *retention policy*.
+
+The retention policy is applied after each successful backup -- if the number of snapshots exceeds the configured maximum at this point, the oldest set of deltas are applied to the seed.
+
+At this point you can no longer restore from the point in time that the seed was taken -- the seed is now combined with the oldest set of deltas and effectively now representing the point in time that the incremental snapshot those deltas belong to was taken.
+
+This process of merging the oldest set of deltas onto the seed is repeated until the total number of snapshots no longer exceeds the configured maximum for this backup task.
+
+One of the drawbacks of the Continuous Incremental backup strategy is that restoring from backups can take quite a long time. The reason for this is that in order to perform a restore, the seed will be copied to the target location and then each set of deltas necessary to reach the desired point in time snapshot will be applied in sequence from oldest to newest.
+
+This is even more of a problem when you consider that most commonly you will want to restore from the latest backup -- it means that of all of the snapshots, the latest backup will always take the longest to restore.
+
+To offset this, this backup strategy supports enabling a feature called MaterializedBackups, which you should consider reading more about.
+
 
 
 = Rotating Sets of Incremental Backups =
