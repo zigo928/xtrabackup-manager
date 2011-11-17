@@ -2,13 +2,15 @@
 
 = Backup Strategies Explained =
 
-XtraBackup Manager provides a number of different backup strategies that are used to control things like:
+XtraBackup Manager provides some different backup strategies that are used to control things like:
 
   * When should a FULL backup snapshot be taken?
   * When should an INCREMENTAL backup snapshot be taken?
   * How long should backups be kept for?
 
-There are currently three backup strategies in XtraBackup Manager and each has a code that is really just a shorthand way of referring to the strategy within XBM.
+There are currently three backup strategies in XtraBackup Manager and each has a code that is really just a shorthand way of referring to the strategy within the software.
+
+They are:
 
   * Full Only - Code: `FULLONLY`
   * Continuous Incremental - Code: `CONTINC`
@@ -23,7 +25,7 @@ This is the simplest backup strategy supported -- XtraBackup Manager will only e
 
 You can configure the maximum number of these snapshots to keep. 
 
-After each backup is complete, the retention policy will be applied and any number of backups beyond the maximum will be deleted, counting from the newest to oldest. 
+After each backup is complete, the retention policy will be applied and any number of backups beyond the maximum will be deleted, starting from the oldest snapshot. 
 
 *IMPORTANT NOTE:* At the time of writing, this method is actually unsupported. You can emulate this with the `Rotating Sets of Incremental Backups` method. Simply use backup strategy code `ROTATING` and set the following parameters for the backup:
 
