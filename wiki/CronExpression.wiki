@@ -1,0 +1,9 @@
+#summary What is a Cron Expression?
+
+= Definition =
+
+Cron is a time-based scheduler for Unix-like operating systems. A Cron Expression is an expression that defines at what times a specific job or command should be triggered.
+
+XtraBackup Manager uses Cron Expressions to define when backup tasks should run, as they are well understood by most Unix/Linux system administrators.
+
+You can read more about [http://en.wikipedia.org/wiki/Cron#CRON_expression Cron Expressions at Wikipedia]
