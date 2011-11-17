@@ -141,10 +141,8 @@ Aside from selecting a backup strategy, you'll need to have the following inform
 
 Once you have all of the above at hand you can add a the scheduled backup task with syntax as follows:
 
-  `shell> xbm backup add <hostname> <backup_name> <strategy_code> \`
-  `<cron_expression> <backup_volume> <datadir_path> <mysql_user> <mysql_password>`
+  `shell> xbm backup add <hostname> <backup_name> <strategy_code> <cron_expression> <backup_volume> <datadir_path> <mysql_user> <mysql_password>`
 
 An example would be:
 
-  `shell> xbm backup add "db01.mydomain.com" "nightlyBackup" ROTATING \`
-  `"30 20 * * *" "Storage Array 1" /usr/local/mysql/data backup "p4ssw0rd"`
+  `shell> xbm backup add "db01.mydomain.com" "nightlyBackup" ROTATING "30 20 * * *" "Storage Array 1" /usr/local/mysql/data backup "p4ssw0rd"`
