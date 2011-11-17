@@ -124,4 +124,27 @@ You can use the xbm command-line tool as follows:
 
 Once you have setup a storage volume and added your host, the next step is to schedule a backup task.
 
-Before you schedule
+Before we proceed, you should know that XtraBackup Manager supports a few different strategies for managing your backups. Since this is a quick start guide and it should remain simple, we're just going to just select a strategy without too much discussion. 
+
+It is important for you to keep in mind that you can only define which backup strategy to use at the time you add each scheduled backup task, so it will be important for you to read more about BackupStrategies before you start using this tool seriously.
+
+For the purposes of this example, we're just going to go with ROTATING, but if you have the time, I highly recommend reading about BackupStrategies now.
+
+Aside from selecting a backup strategy, you'll need to have the following information in order to add your scheduled backup task.
+
+  * Hostname of the host you're backing up - you should have added it above.
+  * Backup name or description you'd like to give the scheduled backup task.
+  * CronExpression that defines when this backup task should be kicked off.
+  * Name of the storage volume you want to use for storage for the backup - you should have added it above.
+  * Path for the MySQL datadir on the host you wish to backup.
+  * MySQL username and password that XtraBackup will use to connect to the MySQL instance that you wish to backup. It needs this to collect things like binary log and slave position details.
+
+Once you have all of the above at hand you can add a the scheduled backup task with syntax as follows:
+
+  `shell> xbm backup add <hostname> <backup_name> <strategy_code> \`
+  `<cron_expression> <backup_volume> <datadir_path> <mysql_user> <mysql_password>`
+
+An example would be:
+
+  `shell> xbm backup add "db01.mydomain.com" "nightlyBackup" ROTATING \`
+  `"30 20 * * *" "Storage Array 1" /usr/local/mysql/data backup "p4ssw0rd"`
