@@ -40,6 +40,8 @@ The Continuous Incremental backup strategy is a more resource conscious way of m
 
 Rather than taking a full backup of your database every time you wish to take a backup, the Continuous Incremental method will take a full backup, or *seed*, first and after that it will only take incremental backups storing only the changes, or *deltas*, since the last backup was taken. 
 
+*Diagram and explain the snapshot taking process here*
+
 You may configure the maximum number of snapshots to maintain on a per backup task basis, and this is referred to as the *retention policy*.
 
 The retention policy is applied after each successful backup -- if the number of snapshots exceeds the configured maximum at this point, the oldest set of deltas are applied to the seed.
@@ -47,6 +49,8 @@ The retention policy is applied after each successful backup -- if the number of
 At this point you can no longer restore from the point in time that the seed was taken -- the seed is now combined with the oldest set of deltas and effectively now representing the point in time that the incremental snapshot those deltas belong to was taken.
 
 This process of merging the oldest set of deltas onto the seed is repeated until the total number of snapshots no longer exceeds the configured maximum for this backup task.
+
+*Example here*
 
 One of the drawbacks of the Continuous Incremental backup strategy is that restoring from backups can take quite a long time. The reason for this is that in order to perform a restore, the seed will be copied to the target location and then each set of deltas necessary to reach the desired point in time snapshot will be applied in sequence from oldest to newest.
 
