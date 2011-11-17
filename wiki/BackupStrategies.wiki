@@ -1,0 +1,56 @@
+#summary Backup Strategies explained
+
+= Backup Strategies Explained =
+
+XtraBackup Manager provides a number of different backup strategies that are used to control things like:
+
+  * When should a FULL backup snapshot be taken?
+  * When should an INCREMENTAL backup snapshot be taken?
+  * How long should backups be kept for?
+
+There are currently three backup strategies in XtraBackup Manager:
+
+  * Full Only - Code: FULLONLY
+  * Continuous Incremental - Code: CONTINC
+  * Rotating Sets of Incremental Backups - Code: ROTATING
+
+They are explained in detail below.
+
+
+= Full Only =
+
+This is the simplest backup method supported -- XtraBackup Manager will only ever take full backups of the target host.
+
+You can configure the maximum number of these snapshots to keep. 
+
+After each backup is complete, the retention policy will be applied and any number of backups beyond the maximum will be deleted, counting from the newest to oldest. 
+
+*IMPORTANT NOTE:* At the time of writing, this method is actually unsupported. You can emulate this with the `Rotating Sets of Incremental Backups` method. Simply use backup strategy code `ROTATING` and set the following parameters for the backup:
+
+  * `rotate_method=AFTER_SNAPSHOT_COUNT`
+  * `max_snapshot_groups=N` - N is the number of full backups to keep before deleting the oldest.
+  *  `rotate_snapshot_no=1`
+
+
+= Continuous Incremental =
+
+Take a full backup (aka seed) first and then after that only take incremental backups. The seed and deltas are all stored separately. Again you can configure the maximum number of snapshots to maintain (retention policy), however, in this case, we apply the oldest set of deltas onto the seed and repeat that process until we have no more than the maximum number of snapshots configured. The retention policy is always applied after a successful backup.
+
+
+= Rotating Sets of Incremental Backups =
+
+This is the most complex backup strategy, but it allows a great deal of flexibility. The concept here is that we consider a backup group as a full backup with corresponding sets of deltas. You may configure the number of groups you keep, as well as when new groups should be created in a variety of ways.
+
+The benefit of keeping more than one group, is that should one seed or set of deltas be bad or broken in any way, you have another option -- in addition, you may more frequently take full backups, which means that the number of sets of deltas to be applied to reach a particular restore point will be less.
+
+When using rotating groups, you must select a rotation method - there are two options: DAY_OF_WEEK and AFTER_SNAPSHOT_COUNT.
+
+With the snapshot count rotation method, the first backup will be a FULL backup, after which incremental backups are taken until a total number of backups equals the number you configure. The next backup after that will be a full backup in a new group and the backups after that will be incrementals, based on the newly taken full backup. This cycle just repeats, however, retention is controlled based on the maximum number of groups to maintain. Once a new group is created beyond the maximum allowed, the oldest group will be removed until there are no more than the maximum.
+
+With day of week, you simply select which day(s) of week you would like your FULL backups to be taken on -- XBM will "rotate" on the first snapshot taken for that day. "Rotate" essentially means it will create a new group with its own full backup and then proceed to take deltas until a "rotate_day_of_week" is encountered again. You can also configure a maximum number of deltas allowed, in case for some reason the backup is never running on the day of the week that it should. In that case it will not backup - You may configure if you consider that a fatal error that should be alerted, or if it should just silently do nothing/skip that backup.
+
+The benefit of using day of week over snapshot count is that it allows you to firmly control which days your full backups should happen on.
+
+Eg. If I deploy backups on a new host and I configure to take full backups on Sunday. I might kick off the first backup on a Wednesday -- in this case because it is the first backup ever for the host, it will take a full backup and then continue to take deltas until Sunday, when it will take a full backup again and then continue to rotate every Sunday from then on.
+
+Again for day of week rotation, retention is controlled based on the maximum number of groups to maintain. Once a new group is created beyond the maximum allowed, the oldest group will be removed until there are no more than the maximum.
