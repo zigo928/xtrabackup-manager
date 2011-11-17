@@ -27,9 +27,9 @@ After each backup is complete, the retention policy will be applied and any numb
 
 *IMPORTANT NOTE:* At the time of writing, this method is actually unsupported. You can emulate this with the `Rotating Sets of Incremental Backups` method. Simply use backup strategy code `ROTATING` and set the following parameters for the backup:
 
-  * `rotate_method=AFTER_SNAPSHOT_COUNT`
-  * `max_snapshot_groups=N` - N is the number of full backups to keep before deleting the oldest.
-  *  `rotate_snapshot_no=1`
+  * `rotate_method = AFTER_SNAPSHOT_COUNT`
+  * `max_snapshot_groups = N` -- N is the number of full backups to keep before deleting the oldest.
+  *  `rotate_snapshot_no = 1`
 
 
 = Continuous Incremental =
