@@ -102,9 +102,9 @@ XtraBackup Manager needs to know where to store all of the backup data.
 
 Make a directory somewhere with plenty of storage. Ensure the directory is owned/grouped to your XtraBackup Manager system account and add it to XBM as a storage volume as follows:
 
-  # shell> mkdir /backup1
-  # shell> chown xbm:xbm /backup1 
-  # shell> xbm volume add /backup1 "backup1"
+  # `shell> mkdir /backup1`
+  # shell> `chown xbm:xbm /backup1` 
+  # shell> `xbm volume add /backup1 "backup1"`
 
 The above will add a storage volume with the name "backup1" at /backup1 to XtraBackup Manager. Easy!
 
@@ -115,7 +115,7 @@ To backup a MySQL instance, you'll need to add the host to XtraBackup Manager an
 
 You can use the xbm command-line tool as follows:
 
-  * shell> xbm host add db01.mydomain.com "Web DB 1"
+  `shell> xbm host add "db01.mydomain.com" "Production DB #1"`
 
  Note: You will mostly refer to the host by its hostname - the description is predominantly to make it easier for you keep track of your various hosts.
 
@@ -139,7 +139,7 @@ Aside from selecting a backup strategy, you'll need to have the following inform
   * Path for the MySQL datadir on the host you wish to backup.
   * MySQL username and password that XtraBackup will use to connect to the MySQL instance that you wish to backup. It needs this to collect things like binary log and slave position details.
 
-Once you have all of the above at hand you can add a the scheduled backup task with syntax as follows:
+Once you have all of the above at hand, you can add the scheduled backup task with syntax as follows:
 
   `shell> xbm backup add <hostname> <backup_name> <strategy_code> <cron_expression> <backup_volume> <datadir_path> <mysql_user> <mysql_password>`
 
