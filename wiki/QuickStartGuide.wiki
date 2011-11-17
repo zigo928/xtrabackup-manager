@@ -103,8 +103,8 @@ XtraBackup Manager needs to know where to store all of the backup data.
 Make a directory somewhere with plenty of storage. Ensure the directory is owned/grouped to your XtraBackup Manager system account and add it to XBM as a storage volume as follows:
 
   # `shell> mkdir /backup1`
-  # shell> `chown xbm:xbm /backup1` 
-  # shell> `xbm volume add /backup1 "backup1"`
+  # `shell> chown xbm:xbm /backup1` 
+  # `shell> xbm volume add /backup1 "backup1"`
 
 The above will add a storage volume with the name "backup1" at /backup1 to XtraBackup Manager. Easy!
 
