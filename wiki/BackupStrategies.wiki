@@ -22,9 +22,7 @@ Each strategy is explained in detail below.
 = Full Only =
 
 This is the simplest backup strategy supported -- XtraBackup Manager will only ever take full backups of the target host each time the backup task runs. 
-<p align="center">
-  <img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly.png" />
-</p>
+<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly.png" /></p>
 
 You can configure the maximum number of these snapshots to keep. 
 
