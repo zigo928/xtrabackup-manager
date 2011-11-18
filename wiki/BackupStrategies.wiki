@@ -16,7 +16,9 @@ They are:
   * Continuous Incremental - Code: `CONTINC`
   * Rotating Sets of Incremental Backups - Code: `ROTATING`
 
-Each backup strategy controls when to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in XtraBackup Manager as _retention policy_.
+Each backup strategy controls when to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in XtraBackup Manager as the _retention policy_.
+
+The retention policy is _only_ applied upon successful completion of any backup. 
 
 
 = Full Only =
@@ -24,18 +26,29 @@ Each backup strategy controls when to take FULL or INCREMENTAL backups and in ad
 This is the simplest backup strategy supported -- XtraBackup Manager will only ever take full backups of the target host each time the backup task runs. 
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly.png" /></p>
 
-== Retention Policy ==
-
-
-You can configure the maximum number of these snapshots to keep. 
-
-After each backup is complete, the retention policy will be applied and any number of backups beyond the maximum will be deleted, starting from the oldest snapshot. 
-
 *IMPORTANT NOTE:* At the time of writing, this method is actually unsupported. You can emulate this with the `Rotating Sets of Incremental Backups` method. Simply use backup strategy code `ROTATING` and set the following parameters for the backup:
 
   * `rotate_method = AFTER_SNAPSHOT_COUNT`
   * `max_snapshot_groups = N` -- N is the number of full backups to keep before deleting the oldest.
   *  `rotate_snapshot_no = 1`
+
+
+== Retention Policy ==
+
+The retention policy functionality of the Full Only backup strategy is similarly simple. 
+
+There is one parameter that controls the maximum number of snapshots that may be kept in the backup system. 
+
+This parameter is called `max_snapshots` and defaults to `7`. The default is based on the assumption that most commonly, people may wish to scheduled their backups once a day and plan to keep a week's worth of backup snapshots.
+
+You may change this value at any time and it will be used at the next application of the retention policy for the scheduled backup task.
+
+
+=== Example ===
+
+Assuming you are using the default configuration with `max_snapshots` of `7` and you started nightly backups of a particular system using this strategy just over a week ago, you would expect that upon successful completion of the eighth backup, the very first backup snapshot would be deleted.
+
+
 
 
 = Continuous Incremental =
