@@ -16,13 +16,16 @@ They are:
   * Continuous Incremental - Code: `CONTINC`
   * Rotating Sets of Incremental Backups - Code: `ROTATING`
 
-Each strategy is explained in detail below.
+Each backup strategy controls when to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in XtraBackup Manager as _retention policy_.
 
 
 = Full Only =
 
 This is the simplest backup strategy supported -- XtraBackup Manager will only ever take full backups of the target host each time the backup task runs. 
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly.png" /></p>
+
+== Retention Policy ==
+
 
 You can configure the maximum number of these snapshots to keep. 
 
