@@ -48,6 +48,7 @@ You may change this value at any time and it will be used at the next applicatio
 
 Assuming you are using the default configuration with `max_snapshots` of `7` and you started nightly backups of a particular system using this strategy just over a week ago, you would expect that upon successful completion of the eighth backup, the very first backup snapshot would be deleted.
 
+<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly-retention.png" /></p>
 
 
 
