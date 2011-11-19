@@ -37,19 +37,20 @@ This is the simplest backup strategy supported -- XtraBackup Manager will only e
 
 The retention policy functionality of the Full Only backup strategy is similarly simple. 
 
-There is one parameter that controls the maximum number of snapshots that may be kept in the backup system. 
+There is one parameter, configurable separately against each scheduled backup task, that controls the maximum number of snapshots that may be kept in the backup system for that task.
 
 This parameter is called `max_snapshots` and defaults to `7`. The default is based on the assumption that most commonly, people may wish to scheduled their backups once a day and plan to keep a week's worth of backup snapshots.
 
 You may change this value at any time and it will be used at the next application of the retention policy for the scheduled backup task.
 
+When the retention policy is applied, if the total number of snapshots exceeds `max_snapshots` then the oldest snapshot will be deleted. This process is repeated until the total number of snapshots no longer exceeds `max_snapshots`.
+
 
 === Example ===
 
-Assuming you are using the default configuration with `max_snapshots` of `7` and you started nightly backups of a particular system using this strategy just over a week ago, you would expect that upon successful completion of the eighth backup, the very first backup snapshot would be deleted.
+Assuming you are using the default configuration with `max_snapshots` of `7` and you started nightly backups of a particular system using this strategy just over a week ago, you would expect that upon successful completion of the eighth backup, the oldest backup snapshot would be deleted.
 
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly-retention.png" /></p>
-
 
 
 = Continuous Incremental =
@@ -63,15 +64,21 @@ The seed and deltas are all stored separately on the storage volume that the sch
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc.png" /></p>
 
 
-You may configure the maximum number of snapshots to maintain on a per backup task basis, and this is referred to as the *retention policy*.
+== Retention Policy ==
 
-The retention policy is applied after each successful backup -- if the number of snapshots exceeds the configured maximum at this point, the oldest set of deltas are applied to the seed.
+The retention policy for the Continuous Incremental backup strategy is controlled by a parameter called `max_snapshots`, which defaults to `7`. The default is based on the assumption that most commonly, people may wish to scheduled their backups once a day and plan to keep a week's worth of backup snapshots.
 
-At this point you can no longer restore from the point in time that the seed was taken -- the seed is now combined with the oldest set of deltas and effectively now representing the point in time that the incremental snapshot those deltas belong to was taken.
+This parameter may be configured separately for each individual scheduled backup task.
 
-This process of merging the oldest set of deltas onto the seed is repeated until the total number of snapshots no longer exceeds the configured maximum for this backup task.
+The `max_snapshots` controls the maximum number of backup snapshots that may be kept in the backup system for the given task. This maximum is inclusive of _both_ the seed and all _incrementals_.
 
-*Example here*
+When the retention policy is applied and the total number of snapshots exceeds the value of `max_snapshots`, the oldest set of deltas is applied to the seed. The seed then represents a full backup as at the time of the set of deltas applied.
+
+Once the deltas are successfully applied to the seed, they are deleted -- the process is repeated until the total number of snapshots no longer exceeds `max_snapshots`.
+
+This creates an effect of that can be referred to as _rolling forward_ the seed. It effectively updates the seed, meaning that it can no longer be used to restore to the point in time that it was representing before the merge took place.
+
+<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc-retention.png" /></p>
 
 One of the drawbacks of the Continuous Incremental backup strategy is that restoring from backups can take quite a long time. The reason for this is that in order to perform a restore, the seed will be copied to the target location and then each set of deltas necessary to reach the desired point in time snapshot will be applied in sequence from oldest to newest.
 
