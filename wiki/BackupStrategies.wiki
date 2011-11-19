@@ -56,9 +56,12 @@ Assuming you are using the default configuration with `max_snapshots` of `7` and
 
 The Continuous Incremental backup strategy is a more resource conscious way of maintaining snapshots of your databases at different points in time.
 
-Rather than taking a full backup of your database every time you wish to take a backup, the Continuous Incremental method will take a full backup, or *seed*, first and after that it will only take incremental backups storing only the changes, or *deltas*, since the last backup was taken. 
+Rather than taking a full backup of your database every time your scheduled backup task runs, the Continuous Incremental method will take a full backup, or _seed_, first and after that it will only take incremental backups storing only the changes, or _deltas_, since the last backup was taken. 
 
-*Diagram and explain the snapshot taking process here*
+The seed and deltas are all stored separately on the storage volume that the scheduled backup task is configured to use.
+
+<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc.png" /></p>
+
 
 You may configure the maximum number of snapshots to maintain on a per backup task basis, and this is referred to as the *retention policy*.
 
