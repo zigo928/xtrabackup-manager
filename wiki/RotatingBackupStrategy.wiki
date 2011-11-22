@@ -1,5 +1,7 @@
 #summary Rotating Sets of Incremental Backups Backup Strategy explained
 
+<wiki:toc max_depth="4" />
+
 = Rotating Sets of Incremental Backups Backup Strategy =
 
 The Rotating Sets of Incremental Backups backup strategy, or _Rotating Backups_ for short, combines the space saving advantages offered by the Continuous Incremental strategy with some additional levels of safety.
