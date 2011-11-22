@@ -21,13 +21,13 @@ This guide should be all you need to get up and running with !XtraBackup Manager
 
 = Installing and Configuring =
 
-== Installing XtraBackup Manager ==
+== Installing !XtraBackup Manager ==
 
 *Note: In the steps below, "xbm" is used as the mysql password for the user xbm. It is recommended you exchange that for your own password instead.*
 
 
   # Install a barebones MySQL 5.0 or later somewhere - I suggest using the same host that you plan to run as your backup host. The DB load is very small.
-  # Create a system user account for the backup manager to run under - I use the username `xbm` but it doesn't matter. You *must* create a new user because XtraBackup Manager is going to completely take over the crontab of this user.
+  # Create a system user account for the backup manager to run under - I use the username `xbm` but it doesn't matter. You *must* create a new user because !XtraBackup Manager is going to completely take over the crontab of this user.
   # Change user to your new user: 
     `shell> su - xbm`
   # Edit $HOME/.profile and add a line: ulimit -n 65535
