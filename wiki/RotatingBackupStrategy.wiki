@@ -42,3 +42,5 @@ As you can see in the diagram below, a new backup snapshot group for week #3 is 
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-rotating-retention.png" /></p>
 
 This is just one example of how this backup strategy can be employed, however, the behaviour can be changed to suit business requirements by tweaking the parameters for the scheduled backup task.
+
+== Parameters ==
