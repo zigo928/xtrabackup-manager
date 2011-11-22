@@ -12,7 +12,7 @@ There are currently three backup strategies in XtraBackup Manager and each has a
 
 They are:
 
-  * Full Only - Code: `FULLONLY`
+  * [FullOnlyBackupStrategy Full Only] - Code: `FULLONLY`
   * Continuous Incremental - Code: `CONTINC`
   * Rotating Sets of Incremental Backups - Code: `ROTATING`
 
