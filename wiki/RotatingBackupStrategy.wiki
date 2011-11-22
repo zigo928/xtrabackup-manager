@@ -47,7 +47,7 @@ This is just one example of how this backup strategy can be employed, however, t
 
 All parameters are set individually against each scheduled backup task.
 
-|| Parameter name || Valid Values || Default || Description ||
+|| *Parameter name* || *Valid Values* || *Default* || *Description* ||
 || `rotate_method` || `DAY_OF_WEEK` or `AFTER_SNAPSHOT_COUNT` || `DAY_OF_WEEK` || Whether to trigger group rotation based on the day of the week or after a certain number of snapshots are taken. ||
 || `rotate_day_of_week` || 0-6 - 0=Sunday 6=Saturday || 0 (Sunday) || Which day(s) of week to trigger group rotation on. For multiple days, comma-separated values are accepted. Ignored unless `rotate_method` is `DAY_OF_WEEK`. ||
 || `max_snapshots_per_group` || >= 1 || 7 || The maximum number of snapshots that can exist within a snapshot group. In cases where `rotate_method` is `DAY_OF_WEEK`, it is possible for group rotation to be missed if no backups end up being run on the correct day of the week. If there are already `max_snapshots_per_group` snapshots in the group, no backup will be taken. See: `backup_skip_fatal`. ||
