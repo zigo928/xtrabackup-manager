@@ -16,7 +16,7 @@ They are:
   * [ContinuousIncrementalBackupStrategy Continuous Incremental] - Code: `CONTINC`
   * [RotatingBackupStrategy Rotating Sets of Incremental Backups] - Code: `ROTATING`
 
-Each backup strategy controls when or _if_ to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in XtraBackup Manager as the _retention policy_.
+Each backup strategy controls when or _if_ to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in !XtraBackup Manager as the _retention policy_.
 
 The retention policy is _only_ applied upon successful completion of any backup. 
 
