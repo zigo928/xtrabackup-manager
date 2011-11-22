@@ -1,7 +1,7 @@
 #summary A Quick Start Guide to get up and running using XtraBackup Manager.
 #labels Featured,Phase-Deploy
 
-#sidebar <wiki:toc max_depth="4" />
+<wiki:toc max_depth="4" />
 
 = Introduction =
 
