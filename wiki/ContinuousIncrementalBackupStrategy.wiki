@@ -1,5 +1,7 @@
 #summary Continuous Incremental Backup Strategy explained
 
+= Table of Contents =
+
 <wiki:toc max_depth="4" />
 
 = Continuous Incremental Backup Strategy=
