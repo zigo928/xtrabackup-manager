@@ -97,9 +97,26 @@ This creates an effect of that can be referred to as _rolling forward_ the seed.
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc-retention.png" /></p>
 
 
-
-
 = Rotating Sets of Incremental Backups =
+
+The Rotating Sets of Incremental Backups backup strategy, or _Rotating Backups_ for short, combines the space saving advantages offered by the Continuous Incremental strategy with some additional levels of safety.
+
+As with the Continuous Incremental strategy, rather than taking a full backup of your database every time your scheduled backup task runs, this strategy will take a full backup, or _seed_, first and after that it will  take incremental backups storing only the changes, or _deltas_, since the last backup was taken. 
+
+This seed and it's corresponding deltas are referred to as a _Snapshot Group_. A snapshot group will continue to have incremental snapshots taken until a _rotation_ is triggered. 
+
+When a rotation occurs, a new Snapshot Group is created and a new full backup is taken to be the seed for the new group. Incremental backups will be taken from then until another rotation is triggered and the cycle repeats.
+
+How rotation is triggered is configurable, however, by default the rotation will be triggered based upon the day of the week being Sunday.
+
+<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-rotating.png" /></p>
+
+
+== Retention Policy ==
+
+Retention policy
+
+Incremental backups will continue to be taken until
 
 This is the most complex backup strategy, but it allows a great deal of flexibility. The concept here is that we consider a backup group as a full backup with corresponding sets of deltas. You may configure the number of groups you keep, as well as when new groups should be created in a variety of ways.
 
