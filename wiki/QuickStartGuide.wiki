@@ -65,19 +65,19 @@ XtraBackup Manager v0.6 - Copyright 2011 Marin Software
 The first thing you need to do is setup SSH trust between your backup host and any database hosts you plan to backup. There may be better ways of achieving passwordless SSH login to remote hosts, but this is the simplest way I know. Please feel free to provide feedback via Issues in Google Code.
 
 
-  # Change user to the XtraBackup Manager user:
+  # Change user to the !XtraBackup Manager user:
     `shell> su - xbm`
-  # Create yourself a SSH key -- just press ENTER when prompted to enter a passphrase - we need this to be passwordless so that XtraBackup Manager can use this key to connect to your remote hosts:
+  # Create yourself a SSH key -- just press ENTER when prompted to enter a passphrase - we need this to be passwordless so that !XtraBackup Manager can use this key to connect to your remote hosts:
     `shell> ssh-keygen -t dsa`
   # Decide which user you are going to use to connect to the remote host. I use the `mysql` user because this is the same user that `mysqld` runs under and therefore I do not have to be too concerned about having the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
-  # Add the contents of the newly generated public key of your XtraBackup User (`$HOME/.ssh/id_dsa.pub`) to the file called `$HOME/.ssh/authorized_keys` under the user you selected in the previous step on the host you wish to backup from. Create the .ssh directory in the home directory if necessary
+  # Add the contents of the newly generated public key of your !XtraBackup Manager User (`$HOME/.ssh/id_dsa.pub`) to the file called `$HOME/.ssh/authorized_keys` under the user you selected in the previous step on the host you wish to backup from. Create the .ssh directory in the home directory if necessary
   # Ensure the permissions of the .ssh directory on the remote host are set correctly: 
     `shell> chmod 700 .ssh`
   # Ensure the permissions of the authorized_keys file on the remote host are set correctly:
     `shell> chmod 600 .ssh/authorized_keys`
-  # Test connecting from your XtraBackup Manager host to your remote host with the user you selected to confirm passwordless (key-based) login works:
+  # Test connecting from your !XtraBackup Manager host to your remote host with the user you selected to confirm passwordless (key-based) login works:
     `shell> ssh mysql@backuphost`
-  # Finally, verify that the hostname of your XtraBackup Manager server resolves correctly from your backup host. This is required so that the backup data can be streamed over the network to XtraBackup Manager.
+  # Finally, verify that the hostname of your !XtraBackup Manager server resolves correctly from your backup host. This is required so that the backup data can be streamed over the network to XtraBackup Manager.
     `shell> host backup01`
 
 
@@ -86,11 +86,11 @@ Congratulations! You've now perform the necessary steps backup this host.
 
 === Install XtraBackup ===
 
-XtraBackup needs to be installed and in the `$PATH` of both the user that XtraBackup Manager will run under and the user(s) you will use to connect to your remote database hosts.
+XtraBackup needs to be installed and in the `$PATH` of both the user that !XtraBackup Manager will run under and the user(s) you will use to connect to your remote database hosts.
 
 You should be able to find the information you need to download and install from the [http://www.percona.com/downloads/XtraBackup/ Percona XtraBackup Download Page].
 
-After you have installed XtraBackup, test to see that you can run `xtrabackup` and `innobackupex` by just typing the command under the XtraBackup Manager user on the backup host and under the remote user on your remote host(s).
+After you have installed XtraBackup, test to see that you can run `xtrabackup` and `innobackupex` by just typing the command under the !XtraBackup Manager user on the backup host and under the remote user on your remote host(s).
 
 If not, you may need to setup some symlinks or append the directory with the XtraBackup binaries to your bash `$PATH`. 
 
@@ -99,20 +99,20 @@ If not, you may need to setup some symlinks or append the directory with the Xtr
 
 === Setting up a Storage Volume ===
 
-XtraBackup Manager needs to know where to store all of the backup data. 
+!XtraBackup Manager needs to know where to store all of the backup data. 
 
-Make a directory somewhere with plenty of storage. Ensure the directory is owned/grouped to your XtraBackup Manager system account and add it to XBM as a storage volume as follows:
+Make a directory somewhere with plenty of storage. Ensure the directory is owned/grouped to your !XtraBackup Manager system account and add it to XBM as a storage volume as follows:
 
   # `shell> mkdir /backup1`
   # `shell> chown xbm:xbm /backup1` 
   # `shell> xbm volume add /backup1 "backup1"`
 
-The above will add a storage volume with the name "backup1" at /backup1 to XtraBackup Manager. Easy!
+The above will add a storage volume with the name "backup1" at /backup1 to !XtraBackup Manager. Easy!
 
 
 === Adding a Host ===
 
-To backup a MySQL instance, you'll need to add the host to XtraBackup Manager and give it a description.
+To backup a MySQL instance, you'll need to add the host to !XtraBackup Manager and give it a description.
 
 You can use the xbm command-line tool as follows:
 
@@ -125,7 +125,7 @@ You can use the xbm command-line tool as follows:
 
 Once you have setup a storage volume and added your host, the next step is to schedule a backup task.
 
-Before we proceed, you should know that XtraBackup Manager supports a few different strategies for managing your backups. Since this is a quick start guide and it should remain simple, we're just going to just select a strategy without too much discussion. 
+Before we proceed, you should know that !XtraBackup Manager supports a few different strategies for managing your backups. Since this is a quick start guide and it should remain simple, we're just going to just select a strategy without too much discussion. 
 
 It is important for you to keep in mind that you can only define which backup strategy to use at the time you add each scheduled backup task, so it will be important for you to read more about BackupStrategies before you start using this tool seriously.
 
