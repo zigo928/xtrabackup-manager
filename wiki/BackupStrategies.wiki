@@ -13,8 +13,8 @@ There are currently three backup strategies in XtraBackup Manager and each has a
 They are:
 
   * [FullOnlyBackupStrategy Full Only] - Code: `FULLONLY`
-  * Continuous Incremental - Code: `CONTINC`
-  * Rotating Sets of Incremental Backups - Code: `ROTATING`
+  * [ContinuousIncrementalBackupStrategy Continuous Incremental] - Code: `CONTINC`
+  * [RotatingBackupStrategy Rotating Sets of Incremental Backups] - Code: `ROTATING`
 
 Each backup strategy controls when to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in XtraBackup Manager as the _retention policy_.
 
