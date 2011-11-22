@@ -37,5 +37,8 @@ Assuming you are using the default configuration with `max_snapshots` of `7` and
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly-retention.png" /></p>
 
 == Parameters ==
+
+All parameters are set individually against each scheduled backup task.
+
 || Parameter name || Valid Values || Default || Description ||
 || `max_snapshots` || >= 1 || 7 || The maximum number of snapshots to maintain before the oldest is deleted. ||
