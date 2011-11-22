@@ -2,13 +2,13 @@
 
 = Backup Strategies Explained =
 
-XtraBackup Manager provides some different backup strategies that are used to control things like:
+!XtraBackup Manager provides some different backup strategies that are used to control things like:
 
   * When should a FULL backup snapshot be taken?
   * When should an INCREMENTAL backup snapshot be taken?
   * How long should backups be kept for?
 
-There are currently three backup strategies in XtraBackup Manager and each has a code that is really just a shorthand way of referring to the strategy within the software.
+There are currently three backup strategies in !XtraBackup Manager and each has a code that is really just a shorthand way of referring to the strategy within the software.
 
 They are:
 
