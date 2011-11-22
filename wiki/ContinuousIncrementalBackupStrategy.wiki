@@ -42,6 +42,6 @@ This creates an effect of that can be referred to as _rolling forward_ the seed.
 
 All parameters are set individually against each scheduled backup task.
 
-|| Parameter name || Valid Values || Default || Description ||
+|| *Parameter name* || *Valid Values* || *Default* || *Description* ||
 || `max_snapshots` || >= 1 || 7 || Controls the maximum number of backup snapshots retained. ||
 || `maintain_materialized_copy` || 0 or 1 || 1 || Whether or not the MaterializedBackups feature is enabled. ||
