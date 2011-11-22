@@ -14,7 +14,15 @@ How rotation is triggered is configurable, however, by default the rotation will
 
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-rotating.png" /></p>
 
-== Restoring ==
+== Restores ==
+
+Restores for this backup strategy work by first identifying the snapshot group of the snapshot to restore and then copying the group's relevant seed to the target restore directory. After this the software continues by applying each set of deltas from oldest to newest, in order to reach the point in time of the  snapshot selected for restore.
+
+Similarly to the Continuous Incremental backup strategy, this means that restoring to the point in time of any seed will always be the fastest type of restore to perform, and restoring the most recent backup of a snapshot group will always take the longest amount of time. This is because restoring the latest backup will require applying each set of deltas, one by one, from oldest to newest.
+
+This can be a problem when you consider that most commonly you will want to restore from the latest backup in the event of a system failure. To handle this, this backup strategy supports a feature called MaterializedBackups, which ensures that a fully materialized copy of the latest backup snapshot is always maintained in the backup system, allowing for faster restore times at the expense of disk space.
+
+The feature is controlled by the parameter `maintain_materialized_copy` and is enabled by default. 
 
 
 == Retention Policy ==
