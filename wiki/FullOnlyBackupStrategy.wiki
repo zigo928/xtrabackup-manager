@@ -1,5 +1,3 @@
-# Full Only Backup Strategy explained
-
 = Full Only =
 
 This is the simplest backup strategy supported -- XtraBackup Manager will only ever take full backups of the target host each time the backup task runs. 
