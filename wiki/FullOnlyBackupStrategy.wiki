@@ -6,7 +6,7 @@
 
 = Full Only Backup Strategy =
 
-This is the simplest backup strategy supported -- XtraBackup Manager will only ever take full backups of the target host each time the backup task runs. 
+This is the simplest backup strategy supported -- !XtraBackup Manager will only ever take full backups of the target host each time the backup task runs. 
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-fullonly.png" /></p>
 
 *IMPORTANT NOTE:* At the time of writing, this method is actually unsupported. You can emulate this with the `Rotating Sets of Incremental Backups` method. Simply use backup strategy code `ROTATING` and set the following parameters for the backup:
