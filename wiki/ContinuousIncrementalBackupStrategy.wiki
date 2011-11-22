@@ -1,5 +1,7 @@
 #summary Continuous Incremental Backup Strategy explained
 
+<wiki:toc max_depth="4" />
+
 = Continuous Incremental Backup Strategy=
 
 The Continuous Incremental backup strategy is a more resource conscious way of maintaining snapshots of your databases at different points in time.
