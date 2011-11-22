@@ -1,6 +1,8 @@
 #summary A Quick Start Guide to get up and running using XtraBackup Manager.
 #labels Featured,Phase-Deploy
 
+#sidebar <wiki:toc max_depth="4" />
+
 = Introduction =
 
 This guide should be all you need to get up and running with XtraBackup Manager quickly. The project is currently in Alpha status, so it is *not intended for production usage* -- if you would like to play with the software and provide feedback, please do so!
