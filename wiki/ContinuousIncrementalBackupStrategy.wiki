@@ -39,3 +39,6 @@ This creates an effect of that can be referred to as _rolling forward_ the seed.
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc-retention.png" /></p>
 
 == Parameters ==
+|| Parameter name || Valid Values || Description ||
+|| `max_snapshots` || >= 1 || Controls the maximum number of backup snapshots retained ||
+|| `maintain_materialized_copy` || 0 or 1 || Whether or not the MaterializedBackups feature is enabled ||
