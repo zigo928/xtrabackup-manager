@@ -16,83 +16,8 @@ They are:
   * [ContinuousIncrementalBackupStrategy Continuous Incremental] - Code: `CONTINC`
   * [RotatingBackupStrategy Rotating Sets of Incremental Backups] - Code: `ROTATING`
 
-Each backup strategy controls when to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in XtraBackup Manager as the _retention policy_.
+Each backup strategy controls when or _if_ to take FULL or INCREMENTAL backups and in addition has a different means of controlling when old backups should be deleted. The rules for when backups should be deleted are referred to in XtraBackup Manager as the _retention policy_.
 
 The retention policy is _only_ applied upon successful completion of any backup. 
 
-
-= Continuous Incremental =
-
-The Continuous Incremental backup strategy is a more resource conscious way of maintaining snapshots of your databases at different points in time.
-
-Rather than taking a full backup of your database every time your scheduled backup task runs, the Continuous Incremental method will take a full backup, or _seed_, first and after that it will only take incremental backups storing only the changes, or _deltas_, since the last backup was taken. 
-
-The seed and deltas are all stored separately on the storage volume that the scheduled backup task is configured to use.
-
-<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc.png" /></p>
-
-
-== Restores ==
-
-Restores for the Continuous Incremental backup strategy work by first copying the seed backup snapshot to the target directory and then applying each set of deltas from oldest to newest in order to reach the point in time of the backup snapshot you wish to restore to.
-
-This means that restoring to the point in time of the seed will always be the fastest restore to perform, and restoring the most recent backup will always take the longest amount of time. This is because restoring the latest backup will require applying each set of deltas, one by one, from oldest to newest.
-
-This can be a problem when you consider that most commonly you will want to restore from the latest backup in the event of a system failure. To handle this, this backup strategy supports a feature called MaterializedBackups, which ensures that a fully materialized copy of the latest backup snapshot is always maintained in the backup system, allowing for faster restore times at the expense of disk space.
-
-The feature is controlled by the parameter `maintain_materialized_copy` and is enabled by default. 
-
-
-== Retention Policy ==
-
-The retention policy for the Continuous Incremental backup strategy is controlled by a parameter called `max_snapshots`, which defaults to `7`. The default is based on the assumption that most commonly, people may wish to scheduled their backups once a day and plan to keep a week's worth of backup snapshots.
-
-This parameter may be configured separately for each individual scheduled backup task.
-
-The `max_snapshots` controls the maximum number of backup snapshots that may be kept in the backup system for the given task. This maximum is inclusive of _both_ the seed and all _incrementals_.
-
-When the retention policy is applied and the total number of snapshots exceeds the value of `max_snapshots`, the oldest set of deltas is applied to the seed. The seed then represents a full backup as at the time of the set of deltas applied.
-
-Once the deltas are successfully applied to the seed, they are deleted -- the process is repeated until the total number of snapshots no longer exceeds `max_snapshots`.
-
-This creates an effect of that can be referred to as _rolling forward_ the seed. It effectively updates the seed, meaning that it can no longer be used to restore to the point in time that it was representing before the merge took place.
-
-<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc-retention.png" /></p>
-
-
-= Rotating Sets of Incremental Backups =
-
-The Rotating Sets of Incremental Backups backup strategy, or _Rotating Backups_ for short, combines the space saving advantages offered by the Continuous Incremental strategy with some additional levels of safety.
-
-As with the Continuous Incremental strategy, rather than taking a full backup of your database every time your scheduled backup task runs, this strategy will take a full backup, or _seed_, first and after that it will  take incremental backups storing only the changes, or _deltas_, since the last backup was taken. 
-
-This seed and it's corresponding deltas are referred to as a _Snapshot Group_. A snapshot group will continue to have incremental snapshots taken until a _rotation_ is triggered. 
-
-When a rotation occurs, a new Snapshot Group is created and a new full backup is taken to be the seed for the new group. Incremental backups will be taken from then until another rotation is triggered and the cycle repeats.
-
-How rotation is triggered is configurable, however, by default the rotation will be triggered based upon the day of the week being Sunday.
-
-<p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-rotating.png" /></p>
-
-
-== Retention Policy ==
-
-Retention policy
-
-Incremental backups will continue to be taken until
-
-This is the most complex backup strategy, but it allows a great deal of flexibility. The concept here is that we consider a backup group as a full backup with corresponding sets of deltas. You may configure the number of groups you keep, as well as when new groups should be created in a variety of ways.
-
-The benefit of keeping more than one group, is that should one seed or set of deltas be bad or broken in any way, you have another option -- in addition, you may more frequently take full backups, which means that the number of sets of deltas to be applied to reach a particular restore point will be less.
-
-When using rotating groups, you must select a rotation method - there are two options: DAY_OF_WEEK and AFTER_SNAPSHOT_COUNT.
-
-With the snapshot count rotation method, the first backup will be a FULL backup, after which incremental backups are taken until a total number of backups equals the number you configure. The next backup after that will be a full backup in a new group and the backups after that will be incrementals, based on the newly taken full backup. This cycle just repeats, however, retention is controlled based on the maximum number of groups to maintain. Once a new group is created beyond the maximum allowed, the oldest group will be removed until there are no more than the maximum.
-
-With day of week, you simply select which day(s) of week you would like your FULL backups to be taken on -- XBM will "rotate" on the first snapshot taken for that day. "Rotate" essentially means it will create a new group with its own full backup and then proceed to take deltas until a "rotate_day_of_week" is encountered again. You can also configure a maximum number of deltas allowed, in case for some reason the backup is never running on the day of the week that it should. In that case it will not backup - You may configure if you consider that a fatal error that should be alerted, or if it should just silently do nothing/skip that backup.
-
-The benefit of using day of week over snapshot count is that it allows you to firmly control which days your full backups should happen on.
-
-Eg. If I deploy backups on a new host and I configure to take full backups on Sunday. I might kick off the first backup on a Wednesday -- in this case because it is the first backup ever for the host, it will take a full backup and then continue to take deltas until Sunday, when it will take a full backup again and then continue to rotate every Sunday from then on.
-
-Again for day of week rotation, retention is controlled based on the maximum number of groups to maintain. Once a new group is created beyond the maximum allowed, the oldest group will be removed until there are no more than the maximum.
+Each of the backup strategies is explained in more detail at the linked sections above.
