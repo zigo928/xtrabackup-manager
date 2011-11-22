@@ -1,5 +1,7 @@
 #summary Full Only Backup Strategy explained
 
+= Table of Contents =
+
 <wiki:toc max_depth="4" />
 
 = Full Only Backup Strategy =
