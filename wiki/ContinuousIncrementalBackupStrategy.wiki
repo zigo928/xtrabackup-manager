@@ -37,3 +37,5 @@ Once the deltas are successfully applied to the seed, they are deleted -- the pr
 This creates an effect of that can be referred to as _rolling forward_ the seed. It effectively updates the seed, meaning that it can no longer be used to restore to the point in time that it was representing before the merge took place.
 
 <p align="center"><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-continc-retention.png" /></p>
+
+== Parameters ==
