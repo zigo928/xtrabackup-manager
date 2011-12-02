@@ -20,7 +20,7 @@ Enabling throttling in !XtraBackup Manager is actually very easy. You can limit 
 
 eg.
 
-  `shell> xbm backup edit db01.mydomain.com Nightly throttle 10`
+    `shell> xbm backup edit db01.mydomain.com Nightly throttle 10`
 
 The above will ensure that the backup named "Nightly" for db01.mydomain.com will not use more than 10 megabytes per second of IO.
 
