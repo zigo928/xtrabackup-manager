@@ -3,12 +3,26 @@
 
 = Throttling =
 
-Add your content here.
+Taking backups of your database systems is an important task, but it should never take such a toll on the system that it affects its ability to deliver service.
+
+Many administrators address this issue by running their backups during periods where the database is not very busy, but unfortunately not everybody has this luxury. The periods of time either simply don't exist, or they are not long enough.
+
+This is where throttling can really help! 
+
+Rather than relying on the OS itself to balance the demands of the ongoing database operations and the backup task, throttling allows you to limit the amount of IO resources available to your backup, ensuring the rest of the system has a predictable amount of resources available to it for the duration of the backup.
+
+This feature is disabled by default on all backup tasks. Instructions on how to enable it are included below.
 
 
-= Details =
+== Enabling Throttling ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Enabling throttling in !XtraBackup Manager is actually very easy. You can limit the IO throughput to N MB/sec (megabytes) by setting the `throttle` parameter for any scheduled backup task.
+
+eg.
+
+  `shell> xbm backup edit db01.mydomain.com Nightly throttle 10`
+
+The above will ensure that the backup named "Nightly" for db01.mydomain.com will not use more than 10 megabytes per second of IO.
+
+
+== How it works ==
