@@ -18,7 +18,7 @@ This feature is disabled by default on all backup tasks. Instructions on how to 
 
 Enabling throttling in !XtraBackup Manager is actually very easy. You can limit the IO throughput to N MB/sec (megabytes) by setting the `throttle` parameter for any scheduled backup task.
 
-eg.
+For Example:
 
     `shell> xbm backup edit db01.mydomain.com Nightly throttle 10`
 
