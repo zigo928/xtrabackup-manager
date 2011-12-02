@@ -1,6 +1,7 @@
 #summary An explanation of backup throttling
+<p><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-throttle-256.png" align="right" />
 
-= Introduction =
+= Throttling =
 
 Add your content here.
 
