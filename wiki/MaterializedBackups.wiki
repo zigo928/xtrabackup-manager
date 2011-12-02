@@ -1,3 +1,4 @@
+<p><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-materialized-256.png" align="right" />
 #summary An explanation of the Materialized Backups feature
 
 = Materialized Backups =
