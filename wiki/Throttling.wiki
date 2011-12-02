@@ -1,4 +1,4 @@
-#summary An explanation of backup throttling
+#summary An explanation of the Throttling feature in XtraBackup Manager
 <p><img src="http://xtrabackup-manager.googlecode.com/svn/wiki/images/xbm-throttle-256.png" align="right" />
 
 = Throttling =
