@@ -16,7 +16,7 @@ This feature is disabled by default on all backup tasks. Instructions on how to 
 
 == Enabling Throttling ==
 
-Before attempting to enable throttling you must ensure that the `pv` tool is available on your system and in the `PATH` for the user that !XtraBackup Manager runs as. More on `pv` can be found [http://www.ivarch.com/programs/pv.shtml here].
+*Note:* Before attempting to enable throttling you must ensure that the `pv` tool is available on your system and in the `PATH` for the user that !XtraBackup Manager runs as. More on `pv` can be found [http://www.ivarch.com/programs/pv.shtml here].
 
 Enabling throttling in !XtraBackup Manager is actually very easy. You can limit the IO throughput to N MB/sec (megabytes) by setting the `throttle` parameter for any scheduled backup task.
 
