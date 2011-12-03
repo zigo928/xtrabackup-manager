@@ -14,9 +14,9 @@ Rather than relying on the OS itself to balance the demands of the ongoing datab
 This feature is disabled by default on all backup tasks. Instructions on how to enable it are included below.
 
 
-== Enabling Throttling ==
+== Using Throttling in XtraBackup Manager ==
 
-*Note:* Before attempting to enable throttling you must ensure that the `pv` tool is available on your system and in the `PATH` for the user that !XtraBackup Manager runs as. More on `pv` can be found [http://www.ivarch.com/programs/pv.shtml here].
+*Note:* Before attempting to enable throttling you must ensure that the `pv` tool is available on your !XtraBackup Manager host and is in the `PATH` for the user that !XtraBackup Manager runs as. More on `pv` can be found [http://www.ivarch.com/programs/pv.shtml here].
 
 Enabling throttling in !XtraBackup Manager is actually very easy. You can limit the IO throughput to N MB/sec (megabytes) by setting the `throttle` parameter for any scheduled backup task.
 
@@ -29,7 +29,18 @@ The above will ensure that the backup named "nightlyBackup" for db01.mydomain.co
 Throttling can be disabled by setting the value to 0.
 
 
-
 == How it works ==
 
-XtraBackup Manager uses two
+!XtraBackup Manager uses two means of limiting the resources consumed. 
+
+When streaming full backups over the network, the `pv` command-line tool is placed in the pipeline on the !XtraBackup Manager server side. This tool allows you to limit the rate at which data flows through it, which in turn provides a sort of resistance in the pipeline, preventing the throughput from exceeding the specified amount.
+
+If taking an incremental backup the `--throttle` parameter is given to `innobackupex` which in turn passes it through to the `xtrabackup` command. In this case, when the `xtrabackup` is scanning the InnoDB data files for changed pages, it will limit the IOPs it uses.
+
+While `pv` allows you to limit in megabytes per second, the `--throttle` parameter for `xtrabackup` is specified in IOPs. 
+
+Through testing it was determined that `xtrabackup` will actually consume at least 2MB/sec for scanning the InnoDB log files, plus 1MB times the value given as the `--throttle` parameter. That is to say, `xtrabackup` for `--throttle=N`, it will actually use `N + 2MB/sec`.
+
+!XtraBackup Manager attempts to simplify things for the user as much as possible and masks this quirk.
+
+When you configure !XtraBackup Manager to throttle at 4MB/sec, by setting the `throttle` parameter to `4`, it will take into account this 2MB/sec used for log file scanning and only give a `--throttle` value of `2` to `xtrabackup`, resulting in an actual IO throughput utilisation much closer to the 4MB/sec specified.
