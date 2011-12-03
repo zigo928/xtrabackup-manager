@@ -43,4 +43,4 @@ Through testing it was determined that `xtrabackup` will actually consume at lea
 
 !XtraBackup Manager attempts to simplify things for the user as much as possible and masks this quirk.
 
-When you configure !XtraBackup Manager to throttle at 4MB/sec, by setting the `throttle` parameter to `4`, it will take into account this 2MB/sec used for log file scanning and only give a `--throttle` value of `2` to `xtrabackup`, resulting in an actual IO throughput utilisation much closer to the 4MB/sec specified.
+When you configure !XtraBackup Manager to throttle at 4MB/sec by setting the `throttle` parameter to `4`, it will take into account this 2MB/sec used for log file scanning and only give a `--throttle` value of `2` to `xtrabackup`, resulting in an actual IO throughput utilisation much closer to the 4MB/sec specified.
