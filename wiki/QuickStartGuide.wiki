@@ -58,7 +58,7 @@ XtraBackup Manager v0.6 - Copyright 2011 Marin Software
 *Congratulations! You are ready to setup your backups*
 
 
-== Preparing Your Backup Hosts ==
+== Preparing The Database Systems You Plan To Backup ==
 
 === Setting up SSH Trust ===
 
@@ -86,13 +86,13 @@ Congratulations! You've now perform the necessary steps backup this host.
 
 === Install XtraBackup ===
 
-XtraBackup needs to be installed and in the `$PATH` of both the user that !XtraBackup Manager will run under and the user(s) you will use to connect to your remote database hosts.
+XtraBackup needs to be installed and in the `$PATH` of both the user that !XtraBackup Manager will run under on your backup server and the user(s) you will use to connect to your remote database hosts.
 
 You should be able to find the information you need to download and install from the [http://www.percona.com/downloads/XtraBackup/ Percona XtraBackup Download Page].
 
-After you have installed XtraBackup, test to see that you can run `xtrabackup` and `innobackupex` by just typing the command under the !XtraBackup Manager user on the backup host and under the remote user on your remote host(s).
+After you have installed XtraBackup, test to see that you can run `xtrabackup` and `innobackupex` by just typing the command under the !XtraBackup Manager user on the backup server host and under the remote user on your remote database host(s).
 
-If not, you may need to setup some symlinks or append the directory with the XtraBackup binaries to your bash `$PATH`. 
+If not, you may need to setup some symlinks or add the directory with the XtraBackup binaries in it to your `$PATH`. 
 
 
 == Configuring Your Backups ==
