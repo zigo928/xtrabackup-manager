@@ -7,7 +7,7 @@
 
 = Introduction =
 
-This guide should be all you need to get up and running with !XtraBackup Manager quickly. The project is currently in Alpha status, so it is *not intended for production usage* -- if you would like to play with the software and provide feedback, please do so!
+This guide should be all you need to get up and running with !XtraBackup Manager quickly. The project is currently in Beta status, so *please use with caution in production environments* -- if you would like to play with the software and provide feedback, please do so!
 
 
 = Requirements =
@@ -45,8 +45,9 @@ This guide should be all you need to get up and running with !XtraBackup Manager
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
     `shell> mysql -u xbm -pxbm xbm < sql/schema_init.sql`
   # Open `includes/config.php` in your favourite editor and run through the various options. The comments in the file should make it fairly easy to understand what does what.
+  # Add the `xtrabackup-manager` directory to the `$PATH` of the !XtraBackup Manager user and the root user.
   # Test to make sure you can use the xbm command-line tool: 
-    `shell> ./xbm host list` 
+    `shell> xbm host list` 
 
 You should see output like:
 
@@ -69,28 +70,31 @@ XtraBackup Manager v0.6 - Copyright 2011 Marin Software
 The first thing you need to do is setup SSH trust between your backup host and any database hosts you plan to backup. There may be better ways of achieving passwordless SSH login to remote hosts, but this is the simplest way I know. Please feel free to provide feedback via Issues in Google Code.
 
 
-  # Change user to the !XtraBackup Manager user:
+  # On the !XtraBackup Manager Server host, change user to the !XtraBackup Manager user:
     `shell> su - xbm`
   # Create yourself a SSH key -- just press ENTER when prompted to enter a passphrase - we need this to be passwordless so that !XtraBackup Manager can use this key to connect to your remote hosts:
     `shell> ssh-keygen -t dsa`
-  # Decide which user you are going to use to connect to the remote host. I use the `mysql` user because this is the same user that `mysqld` runs under and therefore I do not have to be too concerned about having the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
-  # Add the contents of the newly generated public key of your !XtraBackup Manager User (`$HOME/.ssh/id_dsa.pub`) to the file called `$HOME/.ssh/authorized_keys` under the user you selected in the previous step on the host you wish to backup from. Create the .ssh directory in the home directory if necessary
-  # Ensure the permissions of the .ssh directory on the remote host are set correctly: 
+  # Decide which user you are going to use to connect to the databases you wish to backup. I use the `mysql` user because this is the same user that `mysqld` runs under and therefore I do not have to be too concerned about having the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
+  # Add the contents of the newly generated public key of your !XtraBackup Manager User (`$HOME/.ssh/id_dsa.pub`) to the file called `$HOME/.ssh/authorized_keys` under the user you selected in the previous step on the remote database system you wish to backup. Create the .ssh directory in the home directory of that user if necessary.
+  # Ensure the permissions of the .ssh directory on the remote database host are set correctly: 
     `shell> chmod 700 .ssh`
-  # Ensure the permissions of the authorized_keys file on the remote host are set correctly:
+  # Ensure the permissions of the authorized_keys file on the remote database host are set correctly:
     `shell> chmod 600 .ssh/authorized_keys`
-  # Test connecting from your !XtraBackup Manager host to your remote host with the user you selected to confirm passwordless (key-based) login works:
+  # Test connecting from your !XtraBackup Manager server to your remote database host with the user you selected to confirm passwordless (key-based) login works:
     `shell> ssh mysql@backuphost`
-  # Finally, verify that the hostname of your !XtraBackup Manager server resolves correctly from your backup host. This is required so that the backup data can be streamed over the network to !XtraBackup Manager.
+  # Finally, verify that the hostname of your !XtraBackup Manager server resolves correctly from your remote database host. This is required so that the backup data can be streamed over the network back to !XtraBackup Manager.
     `shell> host backup01`
 
 
-Congratulations! You've now perform the necessary steps backup this host.
+Congratulations! You've now perform the necessary steps backup this remote database host with !XtraBackup Manager.
 
 
 === Install XtraBackup ===
 
-XtraBackup needs to be installed and in the `$PATH` of both the user that !XtraBackup Manager will run under on your backup server and the user(s) you will use to connect to your remote database hosts.
+XtraBackup needs to be installed and in the `$PATH` in two key places.
+
+# The user that !XtraBackup Manager will run under on your backup server
+# The user you will use to connect to your remote database hosts - in our example above, this was the `mysql` user.
 
 You should be able to find the information you need to download and install from the [http://www.percona.com/downloads/XtraBackup/ Percona XtraBackup Download Page].
 
@@ -105,7 +109,7 @@ If not, you may need to setup some symlinks or add the directory with the XtraBa
 
 !XtraBackup Manager needs to know where to store all of the backup data. 
 
-Make a directory somewhere with plenty of storage. Ensure the directory is owned/grouped to your !XtraBackup Manager system account and add it to XBM as a storage volume as follows:
+Make a directory somewhere with plenty of storage. Ensure the directory is owned/grouped to your !XtraBackup Manager user and add it to XBM as a storage volume as follows:
 
   # `shell> mkdir /backup1`
   # `shell> chown xbm:xbm /backup1` 
@@ -114,7 +118,7 @@ Make a directory somewhere with plenty of storage. Ensure the directory is owned
 The above will add a storage volume with the name "backup1" at /backup1 to !XtraBackup Manager. Easy!
 
 
-=== Adding a Host ===
+=== Adding a Remote Database Host To Backup ===
 
 To backup a MySQL instance, you'll need to add the host to !XtraBackup Manager and give it a description.
 
@@ -122,12 +126,12 @@ You can use the xbm command-line tool as follows:
 
   `shell> xbm host add "db01.mydomain.com" "Production DB #1"`
 
- Note: You will mostly refer to the host by its hostname - the description is predominantly to make it easier for you keep track of your various hosts.
+ Note: You will mostly refer to the remote database host by its hostname - the description is predominantly to make it easier for you keep track of your various hosts.
 
 
 === Adding a Backup Task ===
 
-Once you have setup a storage volume and added your host, the next step is to schedule a backup task.
+Once you have setup a storage volume and added your remote database host, the next step is to schedule a backup task for that host.
 
 Before we proceed, you should know that !XtraBackup Manager supports a few different strategies for managing your backups. Since this is a quick start guide and it should remain simple, we're just going to just select a strategy without too much discussion. 
 
