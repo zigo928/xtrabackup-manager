@@ -37,7 +37,7 @@ This guide should be all you need to get up and running with !XtraBackup Manager
     `shell> mysql -u root -p`
   # Create a database schema for !XtraBackup Manager to use in MySQL: 
     `mysql> CREATE DATABASE xbm CHARACTER SET utf8;`
-  # Setup a user for !XtraBackup Manager to use: 
+  # Setup a user for !XtraBackup Manager to use -- access to the MySQL DB by this user will only originate from the !XtraBackup Manager server itself, so unless the MySQL Databse you are using is remote, 'localhost' should suffice.
     `mysql> CREATE USER 'xbm'@'localhost' IDENTIFIED BY 'xbm';`<br />
     `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost';`
   # Change directory to the xtrabackup-manager directory:
