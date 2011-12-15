@@ -37,7 +37,6 @@ This guide should be all you need to get up and running with !XtraBackup Manager
     `mysql> CREATE DATABASE xbm CHARACTER SET utf8;`
   # Setup a user for !XtraBackup Manager to use: 
     `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
-    `mysql> GRANT FILE ON *.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
     `shell> mysql -u xbm -pxbm xbm < sql/schema_init.sql`
   # Open `includes/config.php` in your favourite editor and run through the various options. The comments in the file should make it fairly easy to understand what does what.
