@@ -33,10 +33,13 @@ This guide should be all you need to get up and running with !XtraBackup Manager
   # Edit $HOME/.profile and add a line: ulimit -n 65535
   # Export the code: 
     `shell> svn export http://xtrabackup-manager.googlecode.com/svn/trunk/ xtrabackup-manager`
+  # Connect to MySQL using the command-line client:
+    `shell> mysql -u root -p`
   # Create a database schema for !XtraBackup Manager to use in MySQL: 
     `mysql> CREATE DATABASE xbm CHARACTER SET utf8;`
   # Setup a user for !XtraBackup Manager to use: 
-    `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost' IDENTIFIED BY 'xbm';`
+    `mysql> CREATE USER 'xbm'@'localhost' IDENTIFIED BY 'xbm';`<br />
+    `mysql> GRANT ALL PRIVILEGES ON xbm.* TO 'xbm'@'localhost';`
   # Initialise the schema by running `sql/schema_init.sql` within the newly created database. 
     `shell> mysql -u xbm -pxbm xbm < sql/schema_init.sql`
   # Open `includes/config.php` in your favourite editor and run through the various options. The comments in the file should make it fairly easy to understand what does what.
