@@ -16,7 +16,7 @@ This guide should be all you need to get up and running with !XtraBackup Manager
   * MySQL server and command-line client 5.0.x or later - It is possible older versions will work.
   * Root access on the backup box and the database box(es) you plan to backup.
   * PHP 5 - Tested on 5.1.6 - Must also have php CLI - project expects it at `/usr/bin/php` and mysqli. (Eg, on debian based systems you need php5-cli and php5-mysql.)
-  * xtrabackup 1.6.3 or later
+  * xtrabackup 1.6.4 or later
 
 
 = Installing and Configuring =
