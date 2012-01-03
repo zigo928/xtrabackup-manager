@@ -114,7 +114,7 @@ Make a directory somewhere with plenty of storage. Ensure the directory is owned
 
   # `shell> mkdir /backup1`
   # `shell> chown xbm:xbm /backup1` 
-  # `shell> xbm volume add /backup1 "backup1"`
+  # `shell> xbm volume add "backup1" /backup1`
 
 The above will add a storage volume with the name "backup1" at /backup1 to !XtraBackup Manager. Easy!
 
