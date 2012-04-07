@@ -31,7 +31,7 @@ This guide should be all you need to get up and running with !XtraBackup Manager
   # Change user to your new user: 
     `shell> su - xbm`
   # Edit $HOME/.profile and add a line: ulimit -n 65535
-  # Download the latest package from the Downloads section.
+  # Download the latest package from the [http://code.google.com/p/xtrabackup-manager/downloads/list Downloads] section.
   # Extract the tgz file - it will create a directory called "xtrabackup-manager". 
     `shell> tar xvzf xtrabackup-manager-noarch-0.81-r229.tgz`
   # Connect to MySQL using the command-line client:
