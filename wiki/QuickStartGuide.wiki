@@ -12,7 +12,7 @@ This guide should be all you need to get up and running with !XtraBackup Manager
 
 = Requirements =
 
-  * Linux with cron, ssh and netcat (nc) - So far I have been testing on CentOS 5.5 and Nexenta 3.01
+  * A Linux or Solaris-based system with cron, ssh, pv and netcat (nc)
   * MySQL server and command-line client 5.0.x or later - It is possible older versions will work.
   * Root access on the backup box and the database box(es) you plan to backup.
   * PHP 5 - Tested on 5.1.6 - Must also have php CLI - project expects it at `/usr/bin/php` and mysqli. (Eg, on debian based systems you need php5-cli and php5-mysql.)
@@ -31,8 +31,9 @@ This guide should be all you need to get up and running with !XtraBackup Manager
   # Change user to your new user: 
     `shell> su - xbm`
   # Edit $HOME/.profile and add a line: ulimit -n 65535
-  # Export the code: 
-    `shell> svn export http://xtrabackup-manager.googlecode.com/svn/trunk/ xtrabackup-manager`
+  # Download the latest package from the Downloads section.
+  # Extract the tgz file - it will create a directory called "xtrabackup-manager". 
+    `shell> tar xvzf xtrabackup-manager-noarch-0.81-r229.tgz`
   # Connect to MySQL using the command-line client:
     `shell> mysql -u root -p`
   # Create a database schema for !XtraBackup Manager to use in MySQL: 
