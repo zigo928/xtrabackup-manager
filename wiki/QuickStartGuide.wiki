@@ -76,7 +76,9 @@ The first thing you need to do is setup SSH trust between your backup host and a
     `shell> su - xbm`
   # Create yourself a SSH key -- just press ENTER when prompted to enter a passphrase - we need this to be passwordless so that !XtraBackup Manager can use this key to connect to your remote hosts:
     `shell> ssh-keygen -t dsa`
-  # Decide which user you are going to use to connect to the databases you wish to backup. I use the `mysql` user because this is the same user that `mysqld` runs under and therefore I do not have to be too concerned about having the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
+  # Decide which user you are going to use to connect to the databases you wish to backup. !XtraBackup Manager uses the `mysql` user by default, because this is the same user that `mysqld` runs under and therefore it will have the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
+    * *NOTE:* You can change the Unix username that is used for any scheduled backup task with a command like: 
+      `shell> xbm backup edit <hostname> <backupName> backup_user <username>`
   # Add the contents of the newly generated public key of your !XtraBackup Manager User (`$HOME/.ssh/id_dsa.pub`) to the file called `$HOME/.ssh/authorized_keys` under the user you selected in the previous step on the remote database system you wish to backup. Create the .ssh directory in the home directory of that user if necessary.
   # Ensure the permissions of the .ssh directory on the remote database host are set correctly: 
     `shell> chmod 700 .ssh`
