@@ -157,3 +157,7 @@ Once you have all of the above at hand, you can add the scheduled backup task wi
 An example would be:
 
   `shell> xbm backup add "db01.mydomain.com" "nightlyBackup" ROTATING "30 20 * * *" "Storage Array 1" /usr/local/mysql/data backup "p4ssw0rd"`
+
+*NOTE:* XtraBackup manager will default to using the Unix username 'mysql' to SSH into the database you wish to backup and run the backup. If you would like to change this you can use a command like the following:
+
+  `shell> xbm backup edit "db01.mydomain.com" "nightlyBackup" backup_user myNewUser` 
