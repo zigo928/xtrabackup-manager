@@ -76,7 +76,7 @@ The first thing you need to do is setup SSH trust between your backup host and a
     `shell> su - xbm`
   # Create yourself a SSH key -- just press ENTER when prompted to enter a passphrase - we need this to be passwordless so that !XtraBackup Manager can use this key to connect to your remote hosts:
     `shell> ssh-keygen -t dsa`
-  # Decide which user you are going to use to connect to the databases you wish to backup. !XtraBackup Manager uses the `mysql` user by default, because this is the same user that `mysqld` runs under and therefore it will have the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
+  # Decide which user you are going to use to connect to the databases you wish to backup. !XtraBackup Manager uses the *`mysql`* user by default, because this is the same user that `mysqld` runs under and therefore it will have the right permissions to the MySQL datadir for `xtrabackup` to be able to back up the database.
     * *NOTE:* You can change the Unix username that is used for any scheduled backup task with a command like: 
       `shell> xbm backup edit <hostname> <backupName> backup_user <username>`
   # Add the contents of the newly generated public key of your !XtraBackup Manager User (`$HOME/.ssh/id_dsa.pub`) to the file called `$HOME/.ssh/authorized_keys` under the user you selected in the previous step on the remote database system you wish to backup. Create the .ssh directory in the home directory of that user if necessary.
@@ -160,6 +160,6 @@ An example would be:
 
   `shell> xbm backup add "db01.mydomain.com" "nightlyBackup" ROTATING "30 20 * * *" "Storage Array 1" /usr/local/mysql/data backup "p4ssw0rd"`
 
-*NOTE:* XtraBackup manager will default to using the Unix username 'mysql' to SSH into the database you wish to backup and run the backup. If you would like to change this you can use a command like the following:
+*NOTE:* !XtraBackup manager will default to using the Unix username 'mysql' to SSH into the database you wish to backup and run the backup. If you would like to change this you can use a command like the following:
 
   `shell> xbm backup edit "db01.mydomain.com" "nightlyBackup" backup_user myNewUser` 
